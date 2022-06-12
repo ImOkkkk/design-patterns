@@ -12,6 +12,7 @@
     <module>auth</module>
     <module>alert</module>
     <module>brid</module>
+    <module>isp</module>
   </modules>
 
   <properties>
