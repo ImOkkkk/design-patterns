@@ -25,6 +25,7 @@ public class ApplicationContext {
     alert = new Alert();
     alert.addHandler(new TpsAlertHandler(alertRule, notification));
     alert.addHandler(new ErrorAlertHandler(alertRule, notification));
+    // 改动三：注册 handler
     alert.addHandler(new TimeOutHandler(alertRule, notification));
   }
 

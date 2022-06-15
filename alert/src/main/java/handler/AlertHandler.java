@@ -5,6 +5,7 @@ import pojo.ApiStatInfo;
 import pojo.Notification;
 
 /**
+ * 引入handler的概念，将if判断逻辑分散在各个handler中
  * @author ImOkkkk
  * @date 2022/6/2 13:30
  * @since 1.0

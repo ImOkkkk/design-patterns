@@ -1,6 +1,7 @@
 package pojo;
 
 /**
+ * 存储告警规则，可以自由设置
  * @author ImOkkkk
  * @date 2022/6/2 13:33
  * @since 1.0

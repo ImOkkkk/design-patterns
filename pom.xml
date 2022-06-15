@@ -13,6 +13,7 @@
     <module>alert</module>
     <module>brid</module>
     <module>isp</module>
+    <module>dip</module>
   </modules>
 
   <properties>
