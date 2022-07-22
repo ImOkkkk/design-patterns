@@ -1,8 +1,8 @@
-package service;
+package com.performance.service;
 
+import com.performance.pojo.bo.RequestInfo;
 import java.util.List;
 import java.util.Map;
-import pojo.bo.RequestInfo;
 
 /**
  * 当我们需要实现新的存储方式的时候，只需要实现 MetricsStorage 接口即可。

@@ -1,5 +1,10 @@
-package model.reporter;
+package com.performance.model.reporter;
 
+import com.performance.model.aggregator.Aggregator;
+import com.performance.model.sender.EmailSender;
+import com.performance.pojo.bo.RequestInfo;
+import com.performance.pojo.bo.RequestStat;
+import com.performance.service.MetricsStorage;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,11 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import model.aggregator.Aggregator;
-import model.sender.EmailSender;
-import pojo.bo.RequestInfo;
-import pojo.bo.RequestStat;
-import service.MetricsStorage;
 
 /**
  * @author ImOkkkk

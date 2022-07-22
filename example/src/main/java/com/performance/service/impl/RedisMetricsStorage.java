@@ -1,9 +1,9 @@
-package service.impl;
+package com.performance.service.impl;
 
+import com.performance.pojo.bo.RequestInfo;
+import com.performance.service.MetricsStorage;
 import java.util.List;
 import java.util.Map;
-import pojo.bo.RequestInfo;
-import service.MetricsStorage;
 
 /**
  * @author ImOkkkk
@@ -13,9 +13,7 @@ import service.MetricsStorage;
 public class RedisMetricsStorage implements MetricsStorage {
 
     @Override
-    public void saveRequestInfo(RequestInfo requestInfo) {
-
-    }
+    public void saveRequestInfo(RequestInfo requestInfo) {}
 
     @Override
     public List<RequestInfo> getRequestInfos(String apiName, long startTime, long endTime) {

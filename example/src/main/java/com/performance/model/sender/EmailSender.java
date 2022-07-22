@@ -1,4 +1,4 @@
-package model.sender;
+package com.performance.model.sender;
 
 /**
  * @author ImOkkkk

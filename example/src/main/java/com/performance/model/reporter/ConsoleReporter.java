@@ -1,6 +1,10 @@
-package model.reporter;
+package com.performance.model.reporter;
 
 import com.alibaba.fastjson.JSON;
+import com.performance.model.aggregator.Aggregator;
+import com.performance.pojo.bo.RequestInfo;
+import com.performance.pojo.bo.RequestStat;
+import com.performance.service.MetricsStorage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,10 +12,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import model.aggregator.Aggregator;
-import pojo.bo.RequestInfo;
-import pojo.bo.RequestStat;
-import service.MetricsStorage;
+
 
 /**
  * @author ImOkkkk

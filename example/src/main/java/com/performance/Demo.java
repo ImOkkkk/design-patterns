@@ -1,9 +1,11 @@
-import controller.MetricsCollector;
-import model.reporter.ConsoleReporter;
-import model.reporter.EmailReporter;
-import pojo.bo.RequestInfo;
-import service.MetricsStorage;
-import service.impl.RedisMetricsStorage;
+package com.performance;
+
+import com.performance.controller.MetricsCollector;
+import com.performance.model.reporter.ConsoleReporter;
+import com.performance.model.reporter.EmailReporter;
+import com.performance.pojo.bo.RequestInfo;
+import com.performance.service.MetricsStorage;
+import com.performance.service.impl.RedisMetricsStorage;
 
 /**
  * @author ImOkkkk

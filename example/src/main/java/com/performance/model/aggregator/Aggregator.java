@@ -1,10 +1,10 @@
-package model.aggregator;
+package com.performance.model.aggregator;
 
+import com.performance.pojo.bo.RequestInfo;
+import com.performance.pojo.bo.RequestStat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import pojo.bo.RequestInfo;
-import pojo.bo.RequestStat;
 
 /**
  * @author ImOkkkk

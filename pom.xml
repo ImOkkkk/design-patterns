@@ -15,7 +15,7 @@
     <module>isp</module>
     <module>dip</module>
     <module>lod</module>
-    <module>performance-counters</module>
+    <module>example</module>
   </modules>
 
   <properties>

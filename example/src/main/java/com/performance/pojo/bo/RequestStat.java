@@ -1,4 +1,4 @@
-package pojo.bo;
+package com.performance.pojo.bo;
 
 /**
  * @author ImOkkkk
