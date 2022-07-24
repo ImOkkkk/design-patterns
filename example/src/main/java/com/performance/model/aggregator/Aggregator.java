@@ -2,9 +2,13 @@ package com.performance.model.aggregator;
 
 import com.performance.pojo.bo.RequestInfo;
 import com.performance.pojo.bo.RequestStat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author ImOkkkk
@@ -13,31 +17,84 @@ import java.util.List;
  */
 public class Aggregator {
 
-    public static RequestStat aggregate(List<RequestInfo> requestInfos, long durationInMillis) {
+    public Map<String, RequestStat> aggregate(
+            Map<String, List<RequestInfo>> requestInfos, long durationInMillis) {
+        Map<String, RequestStat> requestStats = new HashMap<>();
+        for (Entry<String, List<RequestInfo>> entry : requestInfos.entrySet()) {
+            String apiName = entry.getKey();
+            List<RequestInfo> requestInfosPerApi = entry.getValue();
+            RequestStat requestStat = doAggregate(requestInfosPerApi, durationInMillis);
+            requestStats.put(apiName, requestStat);
+        }
+        return requestStats;
+    }
+
+    private RequestStat doAggregate(List<RequestInfo> requestInfos, long durationInMillis) {
+        List<Double> respTimes = new ArrayList<>();
+        for (RequestInfo requestInfo : requestInfos) {
+            double respTime = requestInfo.getResponseTime();
+            respTimes.add(respTime);
+        }
+        RequestStat requestStat = new RequestStat();
+        requestStat.setMaxResponseTime(max(respTimes));
+        requestStat.setMinResponseTime(min(respTimes));
+        requestStat.setAvgResponseTime(avg(respTimes));
+        requestStat.setP999ResponseTime(percentile999(respTimes));
+        requestStat.setP99ResponseTime(percentile99(respTimes));
+        requestStat.setCount(respTimes.size());
+        requestStat.setTps((long) tps(respTimes.size(), durationInMillis / 1000));
+        return requestStat;
+    }
+
+    private double max(List<Double> dataset) {
         double maxRespTime = Double.MIN_VALUE;
+        for (Double respTime : dataset) {
+            maxRespTime = Math.max(respTime, maxRespTime);
+        }
+        return maxRespTime;
+    }
+
+    private double min(List<Double> dataset) {
         double minRespTime = Double.MAX_VALUE;
+        for (Double respTime : dataset) {
+            minRespTime = Math.min(respTime, minRespTime);
+        }
+        return minRespTime;
+    }
+
+    private double avg(List<Double> dataset) {
         double avgRespTime = -1;
-        double p999RespTime = -1;
-        double p99RespTime = -1;
         double sumRespTime = 0;
         long count = 0;
-        for (RequestInfo requestInfo : requestInfos) {
+        for (Double respTime : dataset) {
             ++count;
-            double respTime = requestInfo.getResponseTime();
-            maxRespTime = Math.max(respTime, maxRespTime);
-            minRespTime = Math.min(respTime, minRespTime);
             sumRespTime += respTime;
         }
         if (count != 0) {
             avgRespTime = sumRespTime / count;
         }
-        long tps = (long) (count / durationInMillis * 1000);
+        return avgRespTime;
+    }
+
+    private double tps(int count, double duration) {
+        return count / duration;
+    }
+
+    private double percentile999(List<Double> dataset) {
+        return dataset.get((int) percentile(dataset, 0.999));
+    }
+
+    private double percentile99(List<Double> dataset) {
+        return dataset.get((int) percentile(dataset, 0.99));
+    }
+
+    private double percentile(List<Double> dataset, double ratio) {
         Collections.sort(
-                requestInfos,
-                new Comparator<RequestInfo>() {
+                dataset,
+                new Comparator<Double>() {
                     @Override
-                    public int compare(RequestInfo o1, RequestInfo o2) {
-                        double diff = o1.getResponseTime() - o2.getResponseTime();
+                    public int compare(Double o1, Double o2) {
+                        double diff = o1 - o2;
                         if (diff > 0.0) {
                             return 1;
                         } else if (diff < 0.0) {
@@ -47,20 +104,6 @@ public class Aggregator {
                         }
                     }
                 });
-        int index999 = (int) (count * 0.999);
-        int index99 = (int) (count * 0.99);
-        if (count != 0) {
-            p999RespTime = requestInfos.get(index999).getResponseTime();
-            p99RespTime = requestInfos.get(index99).getResponseTime();
-        }
-        RequestStat requestStat = new RequestStat();
-        requestStat.setMaxResponseTime(maxRespTime);
-        requestStat.setMinResponseTime(minRespTime);
-        requestStat.setAvgResponseTime(avgRespTime);
-        requestStat.setP999ResponseTime(p999RespTime);
-        requestStat.setP99ResponseTime(p99RespTime);
-        requestStat.setCount(count);
-        requestStat.setTps(tps);
-        return requestStat;
+        return (dataset.size() * ratio);
     }
 }

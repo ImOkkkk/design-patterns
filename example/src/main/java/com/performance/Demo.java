@@ -1,8 +1,11 @@
 package com.performance;
 
 import com.performance.controller.MetricsCollector;
+import com.performance.model.aggregator.Aggregator;
 import com.performance.model.reporter.ConsoleReporter;
 import com.performance.model.reporter.EmailReporter;
+import com.performance.model.viewer.ConsoleViewer;
+import com.performance.model.viewer.EmailViewer;
 import com.performance.pojo.bo.RequestInfo;
 import com.performance.service.MetricsStorage;
 import com.performance.service.impl.RedisMetricsStorage;
@@ -15,13 +18,19 @@ import com.performance.service.impl.RedisMetricsStorage;
 public class Demo {
     public static void main(String[] args) {
         MetricsStorage metricsStorage = new RedisMetricsStorage();
-        ConsoleReporter consoleReporter = new ConsoleReporter(metricsStorage);
+        Aggregator aggregator = new Aggregator();
+        // 定时触发统计并将结果显示到终端
+        ConsoleViewer consoleViewer = new ConsoleViewer();
+        ConsoleReporter consoleReporter = new ConsoleReporter(metricsStorage, aggregator, consoleViewer);
         consoleReporter.startRepeatedReport(60, 60);
 
-        EmailReporter emailReporter = new EmailReporter(metricsStorage);
-        emailReporter.addToAddress("example@qq.com");
+        // 定时触发统计并将结果输出到邮件
+        EmailViewer emailViewer = new EmailViewer();
+        emailViewer.addToAddress("example@qq.com");
+        EmailReporter emailReporter = new EmailReporter(metricsStorage, aggregator, emailViewer);
         emailReporter.startDailyReport();
 
+        // 收集接口访问数据
         MetricsCollector collector = new MetricsCollector(metricsStorage);
         collector.recordRequest(new RequestInfo("register", 123, 10234));
         collector.recordRequest(new RequestInfo("register", 223, 11234));
