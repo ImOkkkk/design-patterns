@@ -24,9 +24,15 @@ public class EmailViewer implements StatViewer {
         this.emailSender = emailSender;
     }
 
+    public EmailViewer(List<String> emailToAddresses) {
+        this.emailSender = new EmailSender(/*省略参数*/ );
+        this.toAddresses = emailToAddresses;
+    }
+
     public void addToAddress(String address) {
         toAddresses.add(address);
     }
+
 
     @Override
     public void output(

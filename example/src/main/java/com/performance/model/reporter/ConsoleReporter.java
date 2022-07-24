@@ -1,12 +1,10 @@
 package com.performance.model.reporter;
 
 import com.performance.model.aggregator.Aggregator;
+import com.performance.model.viewer.ConsoleViewer;
 import com.performance.model.viewer.StatViewer;
-import com.performance.pojo.bo.RequestInfo;
-import com.performance.pojo.bo.RequestStat;
 import com.performance.service.MetricsStorage;
-import java.util.List;
-import java.util.Map;
+import com.performance.service.impl.RedisMetricsStorage;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -16,12 +14,18 @@ import java.util.concurrent.TimeUnit;
  * @date 2022/7/8 11:31
  * @since 1.0
  */
-public class ConsoleReporter {
+public class ConsoleReporter extends ScheduledReporter {
   private MetricsStorage metricsStorage;
   private Aggregator aggregator;
   private StatViewer viewer;
   private ScheduledExecutorService executor;
 
+  // 兼顾代码的易用性，新增一个封装了默认依赖的构造函数
+  public ConsoleReporter() {
+    this(new RedisMetricsStorage(), new Aggregator(), new ConsoleViewer());
+  }
+
+  // 兼顾灵活性和代码的可测试性，这个构造函数继续保留
   public ConsoleReporter(MetricsStorage metricsStorage, Aggregator aggregator, StatViewer viewer) {
     this.metricsStorage = metricsStorage;
     this.aggregator = aggregator;
@@ -38,12 +42,7 @@ public class ConsoleReporter {
             long durationInMillis = durationInSeconds * 1000;
             long endTimeInMillis = System.currentTimeMillis();
             long startTimeInMillis = endTimeInMillis - durationInMillis;
-            Map<String, List<RequestInfo>> requestInfos =
-                metricsStorage.getRequestInfos(startTimeInMillis, endTimeInMillis);
-            // 第2个代码逻辑：根据原始数据，计算得到统计数据；
-            Map<String, RequestStat> stats = aggregator.aggregate(requestInfos, durationInSeconds);
-            // 第 3 个代码逻辑：将统计数据显示到终端（命令行或邮件）；
-            viewer.output(stats, startTimeInMillis, endTimeInMillis);
+            doStatAndReport(startTimeInMillis, endTimeInMillis);
           }
         },
         0,
