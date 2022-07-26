@@ -16,6 +16,8 @@
     <module>dip</module>
     <module>lod</module>
     <module>example</module>
+    <module>singleton</module>
+    <module>factory</module>
   </modules>
 
   <properties>
