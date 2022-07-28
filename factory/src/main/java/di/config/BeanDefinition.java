@@ -90,6 +90,12 @@ public class BeanDefinition {
       this.arg = arg;
     }
 
+    public ConstructorArg(Builder builder) {
+      this.isRef = builder.isRef;
+      this.type = builder.type;
+      this.arg = builder.arg;
+    }
+
     public boolean isRef() {
       return isRef;
     }
@@ -112,6 +118,40 @@ public class BeanDefinition {
 
     public void setArg(Object arg) {
       this.arg = arg;
+    }
+
+    public class Builder {
+      private boolean isRef;
+      private Class type;
+      private Object arg;
+
+      public ConstructorArg build() {
+        if (this.isRef) {
+          if (type != null) {
+            throw new IllegalArgumentException("当 isRef 为 true 的时候，type 不需要设置");
+          }
+        }else {
+          if (arg == null || type == null){
+            throw new IllegalArgumentException("当 isRef 为 false 的时候，arg、type 都需要设置");
+          }
+        }
+        ConstructorArg constructorArg = new ConstructorArg(this);
+        return constructorArg;
+      }
+      public Builder setRef(boolean ref) {
+        isRef = ref;
+        return this;
+      }
+
+      public Builder setType(Class type) {
+        this.type = type;
+        return this;
+      }
+
+      public Builder setArg(Object arg) {
+        this.arg = arg;
+        return this;
+      }
     }
   }
 }

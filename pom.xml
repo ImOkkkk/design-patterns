@@ -18,6 +18,8 @@
     <module>example</module>
     <module>singleton</module>
     <module>factory</module>
+    <module>builder</module>
+    <module>prototype</module>
   </modules>
 
   <properties>
