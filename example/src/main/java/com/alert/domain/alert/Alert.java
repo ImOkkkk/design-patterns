@@ -1,9 +1,9 @@
-package domain.alert;
+package com.alert.domain.alert;
 
-import handler.AlertHandler;
+import com.alert.handler.AlertHandler;
 import java.util.ArrayList;
 import java.util.List;
-import pojo.ApiStatInfo;
+import com.alert.pojo.ApiStatInfo;
 
 /**
  * @author ImOkkkk
