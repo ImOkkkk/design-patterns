@@ -9,9 +9,6 @@
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <modules>
-    <module>auth</module>
-    <module>alert</module>
-    <module>brid</module>
     <module>isp</module>
     <module>dip</module>
     <module>lod</module>
