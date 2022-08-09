@@ -20,6 +20,7 @@
     <module>proxy</module>
     <module>adapter</module>
     <module>composite</module>
+    <module>flyweight</module>
   </modules>
 
   <properties>
