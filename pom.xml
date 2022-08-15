@@ -23,6 +23,7 @@
     <module>flyweight</module>
     <module>observer</module>
     <module>template</module>
+    <module>strategy</module>
   </modules>
 
   <properties>
