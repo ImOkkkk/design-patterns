@@ -24,6 +24,7 @@
     <module>observer</module>
     <module>template</module>
     <module>strategy</module>
+    <module>chain</module>
   </modules>
 
   <properties>
