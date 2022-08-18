@@ -25,6 +25,7 @@
     <module>template</module>
     <module>strategy</module>
     <module>chain</module>
+    <module>state</module>
   </modules>
 
   <properties>
