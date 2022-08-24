@@ -28,6 +28,8 @@
     <module>state</module>
     <module>iterator</module>
     <module>visitor</module>
+    <module>snapshot</module>
+    <module>command</module>
   </modules>
 
   <properties>
