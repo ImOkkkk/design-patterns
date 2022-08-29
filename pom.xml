@@ -30,6 +30,7 @@
     <module>visitor</module>
     <module>snapshot</module>
     <module>command</module>
+    <module>interpreter</module>
   </modules>
 
   <properties>
